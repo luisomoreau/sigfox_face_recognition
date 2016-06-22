@@ -10,10 +10,11 @@ import argparse
 import imutils
 import time
 import cv2
-import config
-import face
-import backlight
-import screen
+from opencv import config
+from opencv import face
+from lcd import backlight
+from lcd import screen
+from lcd import display
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -25,67 +26,16 @@ args = vars(ap.parse_args())
 vs = VideoStream(usePiCamera=args["picamera"] > 0).start()
 time.sleep(2.0)
 
-class Display(object):
-    backlight = None
-    screen = None
-
-    def __init__(self, bus):
-        self.backlight = backlight.Backlight(bus, 0x62)
-        self.screen    = screen.Screen(bus, 0x3e)
-
-    def write(self, text):
-        self.screen.write(text)
-
-    def color(self, r, g, b):
-        self.backlight.set_color(r, g, b)
-
-    def move(self, col, row):
-        self.screen.setCursor(col, row)
-
-class Backlight(object):
-    REG_RED = 0x04 # pwm2
-    REG_GREEN = 0x03 # pwm1
-    REG_BLUE = 0x02 # pwm0
-
-    REG_MODE1 = 0x00
-    REG_MODE2 = 0x01
-    REG_OUTPUT = 0x08
-
-    def __init__(self, bus, address):
-        if not isinstance(bus, SMBus):
-            raise TypeError
-
-        self.bus = bus
-        self.address = int(address)
-
-        # initialize
-        self.set_register(self.REG_MODE1, 0)
-        self.set_register(self.REG_MODE2, 0)
-
-        # all LED control by PWM
-        self.set_register(self.REG_OUTPUT, 0xAA)
-
-    def set_register(self, addr, value):
-        self.bus.write_byte_data(self.address, addr, value)
-
-    def set_color(self, red, green, blue):
-        r = int(red)
-        g = int(green)
-        b = int(blue)
-        self.set_register(self.REG_RED, r)
-        self.set_register(self.REG_GREEN, g)
-        self.set_register(self.REG_BLUE, b)
-
-d = Display(SMBus(1))
+d = display.Display(SMBus(1))
 d.move(0, 0)
-light = Backlight(SMBus(1), 0x62)
+light = backlight.Backlight(SMBus(1), 0x62)
 light.set_color(0, 0, 0)
-faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+faceCascade = cv2.CascadeClassifier("opencv/haarcascade_frontalface_default.xml")
 print 'Loading training data...'
 
 d.write("Setting up")
 model = cv2.createEigenFaceRecognizer()
-model.load(config.TRAINING_FILE)
+model.load("opencv/training.xml")
 
 print 'Training data loaded!'
 d.write("Ready")
@@ -118,7 +68,7 @@ while True:
                 #        'POSITIVE' if label == config.POSITIVE_LABEL else 'NEGATIVE',
                 #        confidence)
                 print 'Predicted {0} face with confidence {1} (lower is more confident).'.format(label, confidence)
-                if label == config.LOUIS_LABEL and confidence < 2600:
+                if label == config.LOUIS_LABEL and confidence < 3000:
                         #print 'Recognized face!'
                         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
                         light.set_color(0, 255, 0)

@@ -11,13 +11,12 @@ import select
 
 import cv2
 
-#import hardware
 import config
 import face
 
 
 # Prefix for positive training image filenames.
-POSITIVE_FILE_PREFIX = 'nico_'
+POSITIVE_FILE_PREFIX = 'username_'
 
 
 def is_letter_input(letter):
@@ -31,7 +30,6 @@ def is_letter_input(letter):
 
 if __name__ == '__main__':
 	camera = config.get_camera()
-	#box = hardware.Box()
 	# Create the directory for positive training images if it doesn't exist.
 	if not os.path.exists(config.POSITIVE_DIR):
 		os.makedirs(config.POSITIVE_DIR)
