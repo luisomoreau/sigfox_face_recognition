@@ -81,6 +81,20 @@ if __name__ == '__main__':
                         faces.append(prepare_image(filename))
                         labels.append(config.BATISTE_LABEL)
                         pos_count += 1
+		if(path == "lourdes"):
+			faces.append(prepare_image(filename))
+			labels.append(config.LOURDES_LABEL)
+                        pos_count += 1
+		if(path == "nadine"):
+                        faces.append(prepare_image(filename))
+                        labels.append(config.NADINE_LABEL)
+                        pos_count += 1
+		if(path == "anamaria"):
+                        faces.append(prepare_image(filename))
+                        labels.append(config.ANAMARIA_LABEL)
+                        pos_count += 1
+
+
 		
 	# Read all negative images
 	for filename in walk_files(config.NEGATIVE_DIR, '*.pgm'):

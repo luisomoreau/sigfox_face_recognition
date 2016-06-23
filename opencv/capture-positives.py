@@ -16,7 +16,7 @@ import face
 
 
 # Prefix for positive training image filenames.
-POSITIVE_FILE_PREFIX = 'username_'
+POSITIVE_FILE_PREFIX = 'louis_'
 
 
 def is_letter_input(letter):

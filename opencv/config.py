@@ -29,6 +29,10 @@ LOUIS_LABEL = 2
 ANTHO_LABEL = 3
 NICO_LABEL = 4
 BATISTE_LABEL = 5
+LOURDES_LABEL = 6
+ANAMARIA_LABEL = 7
+OLIVIER_LABEL = 8
+NADINE_LABEL = 9
 
 # Size (in pixels) to resize images for training and prediction.
 # Don't change this unless you also change the size of the training images.
