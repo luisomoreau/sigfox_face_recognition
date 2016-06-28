@@ -33,6 +33,7 @@ d.write("Ready")
 
 # loop over the frames from the video stream
 while True:
+	time.sleep(1.0)
         # grab the frame from the threaded video stream and resize it
         # to have a maximum width of 400 pixels
         frame = vs.read()
@@ -77,13 +78,13 @@ while True:
                         light.set_color(0, 255, 0)
                         d.move(0, 0)
                         d.write("Hello Nico".format(label))
-                elif label == config.BATISTE_LABEL and confidence < 3200:
+                elif label == config.BATISTE_LABEL and confidence < 2200:
                         #print 'Recognized face!'
                         #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
                         light.set_color(0, 255, 0)
                         d.move(0, 0)
                         d.write("Hello Batiste".format(label))
-		elif label == config.LOURDES_LABEL and confidence < 2500:
+		elif label == config.LOURDES_LABEL and confidence < 2800:
                         #print 'Recognized face!'
                         #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
                         light.set_color(0, 255, 0)
@@ -95,7 +96,7 @@ while True:
                         light.set_color(0, 255, 0)
                         d.move(0, 0)
                         d.write("Hi Nadine".format(label))
-		elif label == config.ANAMARIA_LABEL and confidence < 2500:
+		elif label == config.ANAMARIA_LABEL and confidence < 2800:
                         #print 'Recognized face!'
                         #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
                         light.set_color(0, 255, 0)
@@ -108,7 +109,7 @@ while True:
                         #cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
                         light.set_color(0, 0, 0)
                         d.move(0, 0)
-                        d.write("Do I know you?")
+                        d.write("I don't know you...")
                 
 
         # show the frame
