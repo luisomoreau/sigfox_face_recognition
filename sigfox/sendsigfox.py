@@ -92,7 +92,7 @@ class Sigfox(object):
         self.ser.close()
 
 if __name__ == '__main__':
-    import time
+    
     if len(sys.argv) == 3:
             portName = sys.argv[2]
             sgfx = Sigfox(portName)
