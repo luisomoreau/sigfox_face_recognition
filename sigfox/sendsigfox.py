@@ -24,9 +24,10 @@ class Sigfox(object):
     CAN = chr(0x18)
     CRC = chr(0x43)
 
-    def __init__(self):
+    def __init__(self, port):
         # allow serial port choice from parameter - default is /dev/ttyAMA0
-        portName = '/dev/ttyAMA0'
+        portName = port
+        
         print 'Serial port : ' + portName
         self.ser = serial.Serial(
                 port=portName,
@@ -92,10 +93,14 @@ class Sigfox(object):
 
 if __name__ == '__main__':
     import time
-    sgfx = Sigfox()
+    if len(sys.argv) == 3:
+            portName = sys.argv[2]
+            sgfx = Sigfox(portName)
+    else:
+        sgfx = Sigfox('/dev/ttyAMA0')
+        
     message = "1234CAFE"
     if len(sys.argv) > 1:
-        portName = sys.argv[1]
         message = "{0}".format(sys.argv[1])
     sgfx.sendMessage(message)
-    time.sleep(600) #sleep for 10 min
+    #time.sleep(600) #sleep for 10 min
