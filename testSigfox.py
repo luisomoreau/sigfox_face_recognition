@@ -14,6 +14,6 @@ from lcd import display
 from sigfox import sendsigfox
 
 #send message
-sgfx = sendsigfox.Sigfox()
+sgfx = sendsigfox.Sigfox("/dev/ttyAMA0")
 message = "CAFE"
 sgfx.sendMessage(message)
