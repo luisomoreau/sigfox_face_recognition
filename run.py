@@ -168,7 +168,10 @@ while True:
                         else:
                                 print "Hello {0} - confidence {1}".format(label, confidence)
                         if ids.count(label) == 0 and len(ids) < 12:
-                                ids.append(label)
+                                if confidence < 2000:
+                                        ids.append(label)
+                                else:
+                                        ids.append(1)
                 
 
         # show the frame
@@ -186,11 +189,12 @@ while True:
                         if lcdDisplay:
                                 light.set_color(0, 0, 255)
                                 d.write("Sending Sigfox")
+                                d.write(message)
                         sgfx.sendMessage(message)
                         t0 = time.time()
                         ids = []
                         if lcdDisplay:
-                                light.set_color(0, 0, 255)
+                                light.set_color(0, 0, 0)
                                 d.write("                   ")
                                 d.write("                   ")
 
